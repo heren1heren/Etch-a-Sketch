@@ -1,0 +1,28 @@
+/*flex-boxes*/
+ body { display: flex;
+       justify-content:center;
+       align-items: center;
+       min-height:100vh;
+
+    background-color: aqua;
+}
+main {background-color: yellow;
+    display: flex;
+    min-height:500px;
+    min-width: 700px;
+    justify-content: flex-start;
+}
+#sketch_pad {
+    margin: 10%;
+    display:flex;
+    flex-wrap:wrap;
+    height: 768px;
+    width:768px;
+    background-color: white;
+    
+}
+#function_bar {
+    background-color: white;
+    flex: 1 150px;
+}
+/*flex-boxes*/
