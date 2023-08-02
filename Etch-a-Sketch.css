@@ -4,9 +4,11 @@
        justify-content:center;
        align-items: center;
       min-height:100vh;
-    background-color:greenyellow;
+    background-color: lightslategray;
 }
-main {align-items: flex-start;
+
+main {border: 30px solid;
+      border-image:linear-gradient(90deg,lightslategray,gray,lightslategray);
     display: flex;
     min-width: 1000px;
     gap: 61px;
@@ -21,11 +23,17 @@ main {align-items: flex-start;
     background-color: white;
     
 }
-#function_bar {display:flex;
+
+#function_bar {
+    display:flex;
     flex-direction: column;
-    background-color: white;
+    align-items: center;
     min-width: 300px;
-    justify-content: space-around;
+    justify-content:center; 
+/* align-self: flex-start; */
 }
 
 /*flex-boxes*/
+.input_color {
+    background-color: aqua;
+}

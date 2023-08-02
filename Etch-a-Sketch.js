@@ -1,31 +1,85 @@
 const sketchPad = document.getElementById('sketch_pad');
-// CREATING SQUARE(div with class) inside *sketchPad with tale-green color(16-16px) border:5% to make it look like a square.
- const inputSquareSize = 30; // i will input it with user interface later!!
+const squareRange = document.getElementById('square_range');
+const colorPicker = document.getElementById('color_picker');
+let inputSquareSize = 30;
+const squareRangeDisplay = document.getElementById('square_range_display');
 
-const amount = Math.floor((360000)/(inputSquareSize**2));//if amount is a natural number then choose; else if amou
- // implement: inputs for the element
+function createGrid() {
+   // remove all existing squares
+   while (sketchPad.firstChild) {
+       sketchPad.removeChild(sketchPad.firstChild);
+   }
 
- for ( i = 1; i<=amount; i++) {
-    const square = document.createElement('div');     
+   // calculate number of squares that fit into sketch pad
+   let numSquares = Math.floor(sketchPad.clientWidth / inputSquareSize);
+
+   // adjust margin or padding of squares if they don't fit perfectly
+   if (numSquares * inputSquareSize < sketchPad.clientWidth) {
+       let margin = Math.floor((sketchPad.clientWidth - numSquares * inputSquareSize) / (2 * numSquares));
+       for (let i = 1; i <= numSquares * numSquares; i++) {
+           const square = document.createElement('div');
            square.setAttribute('class','square');
-           square.style.cssText = `height: ${inputSquareSize}px; width:${inputSquareSize}px;border:1px black solid; box-sizing:border-box;` ;
-           sketchPad.appendChild(square);  
+           square.style.cssText = `height: ${inputSquareSize}px;
+                                   width:${inputSquareSize}px;border:1px black solid; box-sizing:border-box;
+                                   margin:${ margin}px;`;
+           sketchPad.appendChild(square);
+       }
+   } else {
+       for (let i = 1; i <= numSquares * numSquares; i++) {
+           const square = document.createElement('div');
+           square.setAttribute('class','square');
+           square.style.cssText = `height: ${inputSquareSize}px; width:${inputSquareSize}px;border:1px black solid; box-sizing:border-box;`;
+           sketchPad.appendChild(square);
+       }
+   }
+
+    // add hover effect to new squares
+    addHoverEffect();
 }
 
+function addHoverEffect() {
+    let mouseDown = false;
+    const squares = document.querySelectorAll('.square');
+    function mouseDownHandler() {
+        return mouseDown = true;
+    }
+    function mouseUpHandler() {
+        return mouseDown = false;
+    }
 
+    let rainbowModeValue = false;
+    const rainbowMode = document.getElementById('rainbow_mode');
+    rainbowMode.addEventListener('click', () => {
+        if (rainbowMode) {
+            rainbowModeValue = true;
+        } else {
+            rainbowModeValue = false;
+        }
+    });
 
-
-
-// another......
-//create hover effect when mouse go to each square
-const inputColor = 'orange'
-const squares = document.querySelectorAll('.square');
-function changeColor(e) { 
-   // const inputColor= 'orange';
-   
-   e.target.style.cssText = "background-color: rgba(0, 0, 255, 0.58)"
-   // something's wrong here that the code doesn't change color 
+    function changeColor(e) {
+        e.preventDefault();
+        const rainbowColor = `rgb(${Math.random() * 256}, ${Math.random() * 256}, ${Math.random() * 256})`;
+        if(mouseDown && rainbowModeValue) {
+            e.target.style.backgroundColor= rainbowColor;
+        } else if (mouseDown) {
+            e.target.style.backgroundColor= colorPicker.value;
+        }
+    }
+    for (let square of squares) {
+        square.addEventListener('mousedown',changeColor);
+        square.addEventListener('mousedown',mouseDownHandler);
+        square.addEventListener('mouseup',mouseUpHandler);
+        square.addEventListener('mouseover',changeColor);
+    }
 }
-for (square of squares) {
-   square.addEventListener('mouseover',changeColor);
-}
+
+// create initial grid
+createGrid();
+
+// update grid when squareRange input is adjusted
+squareRange.addEventListener('input', () => {
+    inputSquareSize = squareRange.value;
+    squareRangeDisplay.innerText = `Square Size: ${inputSquareSize}`;
+    createGrid();
+});
