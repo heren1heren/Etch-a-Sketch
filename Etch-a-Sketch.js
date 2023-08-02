@@ -13,7 +13,7 @@ function createGrid() {
    // calculate number of squares that fit into sketch pad
    let numSquares = Math.floor(sketchPad.clientWidth / inputSquareSize);
 
-   // adjust margin or padding of squares if they don't fit perfectly
+   // adjust margin of squares if they don't fit perfectly
    if (numSquares * inputSquareSize < sketchPad.clientWidth) {
        let margin = Math.floor((sketchPad.clientWidth - numSquares * inputSquareSize) / (2 * numSquares));
        for (let i = 1; i <= numSquares * numSquares; i++) {
@@ -21,7 +21,7 @@ function createGrid() {
            square.setAttribute('class','square');
            square.style.cssText = `height: ${inputSquareSize}px;
                                    width:${inputSquareSize}px;border:1px black solid; box-sizing:border-box;
-                                   margin:${ margin}px;`;
+                                   margin:${margin}px;`;
            sketchPad.appendChild(square);
        }
    } else {
@@ -33,9 +33,12 @@ function createGrid() {
        }
    }
 
-    // add hover effect to new squares
-    addHoverEffect();
+   // add hover effect to new squares
+   addHoverEffect();
+   
 }
+//create a function that add capicity gradually in color :
+
 
 function addHoverEffect() {
     let mouseDown = false;
@@ -58,14 +61,24 @@ function addHoverEffect() {
     });
 
     function changeColor(e) {
-        e.preventDefault();
-        const rainbowColor = `rgb(${Math.random() * 256}, ${Math.random() * 256}, ${Math.random() * 256})`;
-        if(mouseDown && rainbowModeValue) {
-            e.target.style.backgroundColor= rainbowColor;
-        } else if (mouseDown) {
-            e.target.style.backgroundColor= colorPicker.value;
-        }
-    }
+      e.preventDefault();
+      const rainbowColor = `rgb(${Math.random() * 256}, ${Math.random() * 256}, ${Math.random() * 256})`;
+      if(mouseDown && rainbowModeValue) {
+          e.target.style.backgroundColor = rainbowColor;
+      } else if (mouseDown) {
+          let currentColor = e.target.style.backgroundColor;
+          if (currentColor === '') {
+              e.target.style.backgroundColor = colorPicker.value;
+              e.target.style.opacity = 0.1;
+          } else {
+              let currentOpacity = parseFloat(e.target.style.opacity);
+              if (currentOpacity < 1) {
+                  let newOpacity = Math.min(currentOpacity + 0.1, 1);
+                  e.target.style.opacity = newOpacity;
+              }
+          }
+      }
+  }
     for (let square of squares) {
         square.addEventListener('mousedown',changeColor);
         square.addEventListener('mousedown',mouseDownHandler);
