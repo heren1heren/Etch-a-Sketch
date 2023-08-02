@@ -1,6 +1,6 @@
 const sketchPad = document.getElementById('sketch_pad');
 // CREATING SQUARE(div with class) inside *sketchPad with tale-green color(16-16px) border:5% to make it look like a square.
- const inputSquareSize = 11; // i will input it with user interface later!!
+ const inputSquareSize = 30; // i will input it with user interface later!!
 
 const amount = Math.floor((360000)/(inputSquareSize**2));//if amount is a natural number then choose; else if amou
  // implement: inputs for the element
@@ -14,9 +14,18 @@ const amount = Math.floor((360000)/(inputSquareSize**2));//if amount is a natura
 
 
 
-// deciding how much grid should we create inside the sketchPad( depend on how big each square is we will have less square)
-//if there is misscelluous then do what... if that is the perfect  dividation then calculate and input to the sketch pad
-
 
 
 // another......
+//create hover effect when mouse go to each square
+const inputColor = 'orange'
+const squares = document.querySelectorAll('.square');
+function changeColor(e) { 
+   // const inputColor= 'orange';
+   
+   e.target.style.cssText = "background-color: rgba(0, 0, 255, 0.58)"
+   // something's wrong here that the code doesn't change color 
+}
+for (square of squares) {
+   square.addEventListener('mouseover',changeColor);
+}
