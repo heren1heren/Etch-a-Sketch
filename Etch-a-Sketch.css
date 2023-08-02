@@ -1,28 +1,31 @@
+
 /*flex-boxes*/
  body { display: flex;
        justify-content:center;
        align-items: center;
-       min-height:100vh;
-
-    background-color: aqua;
+      min-height:100vh;
+    background-color:greenyellow;
 }
-main {background-color: yellow;
+main {align-items: flex-start;
     display: flex;
-    min-height:500px;
-    min-width: 700px;
-    justify-content: flex-start;
+    min-width: 1000px;
+    gap: 61px;
+    padding:10px;
+    background-color: gray
 }
-#sketch_pad {
-    margin: 10%;
+#sketch_pad {border: 3px solid black;
     display:flex;
     flex-wrap:wrap;
-    height: 768px;
-    width:768px;
+    height:600px;
+    width: 600px;
     background-color: white;
     
 }
-#function_bar {
+#function_bar {display:flex;
+    flex-direction: column;
     background-color: white;
-    flex: 1 150px;
+    min-width: 300px;
+    justify-content: space-around;
 }
+
 /*flex-boxes*/
